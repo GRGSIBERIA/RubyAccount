@@ -21,6 +21,7 @@ def CreateTable(db)
   create table account_table (
     id integer primary key autoincrement,
     userid integer not null,
+    date text not null,
     summary text);
 END
   db.execute(account_sql)
@@ -30,9 +31,12 @@ END
   db.execute("create table account_by_debit_table (account_id integer not null, debit_id integer not null, cache integer not null);")
 end
 
-
+def MakeTestUser(db)
+  db.execute("insert into user_table values (0, ?)", ["TEST_USER"])
+end
 
 db = SQLite3::Database.new("accounts.db")
 DropTable(db)
 CreateTable(db)
+MakeTestUser(db)
 db.close
