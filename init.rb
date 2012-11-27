@@ -7,12 +7,16 @@ drop and initialize sqlite3 tables.
 require 'sqlite3'
 
 def DropTable(db)
-  db.execute("drop table user_table;")
-  db.execute("drop table account_table;")
-  db.execute("drop table debit_table;")
-  db.execute("drop table credit_table;")
-  db.execute("drop table acconut_by_credit_table;")
-  db.execute("drop table account_by_debit_table;")
+  begin
+    db.execute("drop table user_table;")
+    db.execute("drop table account_table;")
+    db.execute("drop table debit_table;")
+    db.execute("drop table credit_table;")
+    db.execute("drop table account_by_credit_table;")
+    db.execute("drop table account_by_debit_table;")
+  rescue SQLite3::SQLException
+    # nop
+  end
 end
 
 def CreateTable(db)
